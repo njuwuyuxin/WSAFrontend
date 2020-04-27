@@ -17,14 +17,14 @@
 <script>
 export default {
   name: 'Welcome',
-  props: {
-    msg: String
-  }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.welcome{
+    text-align: center;
+}
 .bg{
     width:  100%;
     height: 100%;

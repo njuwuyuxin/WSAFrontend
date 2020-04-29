@@ -1,26 +1,27 @@
 <template>
   <div class="analyse">
-        <Nav></Nav>
-        <!-- <div>请输入请求体(文件名)</div>
-        <input type="text" v-model="reqBody">
-        <button v-on:click="SendGet">测试Get请求</button>
-        <button v-on:click="SendPost">测试Post请求</button>
-        <div>请求返回结果如下：</div>
-        <div>{{result}}</div>
-        <button v-on:click="sim_result">模拟生成返回结果</button> -->
-        
+        <Nav></Nav>      
         <div class="title">上传文件，马上开始静态分析之旅</div>
         <el-upload
             class="upload-box"
             drag
             action="http://118.89.104.33:8888/api/testFile"
+            :before-upload="uploadCheck"
             :on-success="uploadSuccess"
+            :on-error="uploadFailed"
             multiple>
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-            <div class="el-upload__tip" slot="tip">只能上传cpp文件，且不超过500kb</div>
+            <div class="el-upload__tip" slot="tip">只能上传c cpp文件，且不超过1MB</div>
         </el-upload>
-
+        <el-alert
+            class="alert"
+            v-if="hasError"
+            v-bind:title="alertInfo"
+            type="error"
+            show-icon>
+        </el-alert>
+        <!-- <button v-on:click="SendPost">test</button> -->
         <!-- <div class="container">
             <div class="wave"></div>
         </div> -->
@@ -42,6 +43,8 @@ export default {
             reqBody:"",
             fileList: [],
             result:{},
+            alertInfo:"文件上传失败",
+            hasError:false,
         }  
   },
   methods:{
@@ -99,9 +102,43 @@ export default {
             this.result="这是模拟的返回结果";
         },
         
+        alertCancel:function(){
+            this.hasError=false;
+        },
+
+        uploadCheck(file){
+            var testmsg=file.name.substring(file.name.lastIndexOf('.')+1);            
+            const extension = testmsg === 'c';
+            const extension2 = testmsg === 'cpp';
+            const isLt1M = file.size / 1024 / 1024 < 1;
+            if(!extension && !extension2) {
+                this.alertInfo = "上传文件只能是 .c或.cpp格式！";
+                this.hasError=true;
+                setTimeout(this.alertCancel,2000);
+            }
+            if(!isLt1M){
+                this.alertInfo = "上传文件不能超过1MB！";
+                this.hasError=true;
+                setTimeout(this.alertCancel,2000);
+            }
+            return extension || extension2 && isLt1M;
+        },
+
         uploadSuccess(response){
-            console.log(response.content);
-            this.$router.push({path:'/ResultPage',params:{fileID:'12345'}});
+            console.log(response.stateCode);
+            if(response.stateCode==0){
+                console.log(response.filename);
+                this.$router.push({path:'/ResultPage',params:{filename:response.filename}});
+            }
+            else if(response.stateCode==-1){
+                alert(response.errorInfo);
+            }
+            
+        },
+
+        uploadFailed(err){
+            console.log(err);
+            alert("上传失败，可能文件大小超出限制，请联系后端管理员");
         }
   }
 }
@@ -130,13 +167,23 @@ a {
     font-family: Microsoft YaHei;
     font-size: 20px;
     margin:0 auto;
-    margin-top: 50px;
+    margin-top: 160px;
 }
 
 .upload-box{
     width:360px;
     margin:0 auto;
     margin-top: 20px;
+}
+
+.alert{
+    position: fixed;
+    width:400px;
+    /* margin:20px auto; */
+    left:50%;
+    top:170px;
+    margin-left: -200px;
+    opacity: 100%;
 }
 
 </style>

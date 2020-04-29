@@ -30,23 +30,28 @@ export default {
     methods:{
         sim:function(){
             this.getResultFlag=true;
+        },
+        getResult:function(){
+            (function(_this){
+                console.log(_this.$route.params.filename);
+                _this.$axios
+                .post(
+                    "http://118.89.104.33:8888/api/getResult",	//dev
+                    // {filename:_this.$route.params.filename}
+                    {filename:"test.cpp"}
+                )
+                .then(function(response) {
+                    var data=response.data;
+                    _this.result=data; 
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+            })(this);
         }
     },
     mounted(){
-        // (function(_this){
-        //     _this.$axios
-        //     .post(
-        //         "https://www.easy-mock.com/mock/5ea3bed549aac7135eb43e53/wsa/analyze_result",	//dev
-        //         // {fileID:_this.$route.params.fileID}
-        //     )
-        //     .then(function(response) {
-        //         var data=response.data;
-        //         _this.result=data; 
-        //     })
-        //     .catch(function(error) {
-        //         console.log(error);
-        //     });
-        // })(this);
+        this.getResult();
         setTimeout(this.sim,2000);
     },
     props: {
@@ -55,153 +60,7 @@ export default {
     data(){
       return{
           getResultFlag:false,
-          result:{
-                "filename":"main.cpp",
-                "error_count":3,
-                "errors":[
-                    {
-                        "start_line":4,
-                        "end_line":6,
-                        "lines_before_error":[
-                            {
-                                "lineNo":1,
-                                "code":"int main(){"
-                            },
-                            {
-                                "lineNo":2,
-                                "code":"    cout<<\"hello world\"<<endl;"
-                            },
-                            {
-                                "lineNo":3,
-                                "code":"    cout<<\"xxx\"<<endl;"
-                            }
-                        ],
-                        "error_lines":[
-                            {
-                                "lineNo":4,
-                                "code":"    for(int i=0;i<100;i++){"
-                            },
-                            {
-                                "lineNo":5,
-                                "code":"        i--;"
-                            },
-                            {
-                                "lineNo":6,
-                                "code":"    }"
-                            }
-                        ],
-                        "lines_after_error":[
-                            {
-                                "lineNo":7,
-                                "code":"    cout<<\"loop finished\"<<endl;"
-                            },
-                            {
-                                "lineNo":8,
-                                "code":"    return 0;"
-                            },
-                            {
-                                "lineNo":9,
-                                "code":"}"
-                            }
-                        ],
-                        "error_info":"检测到死循环缺陷，该循环可能无法在有限时间内退出"
-                    },
-                    {
-                        "start_line":9,
-                        "end_line":12,
-                        "lines_before_error":[
-                            {
-                                "lineNo":1,
-                                "code":"int main(){"
-                            },
-                            {
-                                "lineNo":2,
-                                "code":"    cout<<\"hello world\"<<endl;"
-                            },
-                            {
-                                "lineNo":3,
-                                "code":"    cout<<\"xxx\"<<endl;"
-                            }
-                        ],
-                        "error_lines":[
-                            {
-                                "lineNo":4,
-                                "code":"    for(int i=0;i<100;i++){"
-                            },
-                            {
-                                "lineNo":5,
-                                "code":"        i--;"
-                            },
-                            {
-                                "lineNo":6,
-                                "code":"    }"
-                            }
-                        ],
-                        "lines_after_error":[
-                            {
-                                "lineNo":7,
-                                "code":"    cout<<\"loop finished\"<<endl;"
-                            },
-                            {
-                                "lineNo":8,
-                                "code":"    return 0;"
-                            },
-                            {
-                                "lineNo":9,
-                                "code":"}"
-                            }
-                        ],
-                        "error_info":"检测到死循环缺陷，该循环可能无法在有限时间内退出"
-                    },
-                    {
-                        "start_line":18,
-                        "end_line":20,
-                        "lines_before_error":[
-                            {
-                                "lineNo":15,
-                                "code":"int main(){"
-                            },
-                            {
-                                "lineNo":16,
-                                "code":"    cout<<\"hello world\"<<endl;"
-                            },
-                            {
-                                "lineNo":17,
-                                "code":"    cout<<\"xxx\"<<endl;"
-                            }
-                        ],
-                        "error_lines":[
-                            {
-                                "lineNo":18,
-                                "code":"    for(int i=0;i<100;i++){"
-                            },
-                            {
-                                "lineNo":19,
-                                "code":"        i--;"
-                            },
-                            {
-                                "lineNo":20,
-                                "code":"    }"
-                            }
-                        ],
-                        "lines_after_error":[
-                            {
-                                "lineNo":21,
-                                "code":"    cout<<\"loop finished\"<<endl;"
-                            },
-                            {
-                                "lineNo":22,
-                                "code":"    return 0;"
-                            },
-                            {
-                                "lineNo":23,
-                                "code":"}"
-                            }
-                        ],
-                        "error_info":"检测到死循环缺陷，该循环可能无法在有限时间内退出"
-                    }
-                ]
-            },
+          result:{},
       }
   }
 }

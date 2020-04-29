@@ -9,7 +9,15 @@
               <NormalLine v-for="line in ErrorInfo.lines_before_error" v-bind:LineInfo="line" :key="line.lineNo"></NormalLine>
               <ErrorLine v-on:mouseenter.native="showErrorTips" v-on:mouseout.native="closeErrorTips" v-for="line in ErrorInfo.error_lines" v-bind:LineInfo="line" :key="line.lineNo"></ErrorLine>
               <NormalLine v-for="line in ErrorInfo.lines_after_error" v-bind:LineInfo="line" :key="line.lineNo"></NormalLine>
-              <div class="errorTips" v-if="ErrorTipsFlag" v-bind:style="{top:ErrorTipsPosY + 'px'}">{{ErrorInfo.error_info}}</div>
+              <el-alert
+              class="errorTips"
+                v-if="ErrorTipsFlag"
+                v-bind:title="ErrorInfo.error_info"
+                type="error"
+                v-bind:style="{top:ErrorTipsPosY + 'px'}"
+                show-icon>
+              </el-alert>
+              <!-- <div class="errorTips" v-if="ErrorTipsFlag" v-bind:style="{top:ErrorTipsPosY + 'px'}">{{ErrorInfo.error_info}}</div> -->
               <div class="ellipse">
                   <span class="part1">...</span>
                   <span class="part2">...</span>
@@ -76,9 +84,10 @@ export default {
 }
 .errorTips{
     position:fixed;
-    border:solid rgb(245, 239, 126) 1px;
-    border-radius: 5px;
-    background-color: rgb(248, 246, 211);
+    /* border:solid rgb(245, 239, 126) 1px; */
+    /* border-radius: 5px; */
+    /* background-color: rgb(248, 246, 211); */
+    border:solid rgb(247, 111, 111) 1px;
     width:500px;
     height:100px;
     left:500px;

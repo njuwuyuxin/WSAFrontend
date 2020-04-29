@@ -2,7 +2,7 @@
   <div class="ErrorLine">
       <div class="frame">
           <span class="lineNo">{{LineInfo.lineNo}}</span>
-          <span class="codeBox"><span class="code">{{LineInfo.code}}</span></span>
+          <span class="codeBox"><span class="code"><pre>{{LineInfo.code}}</pre></span></span>
 
       </div>
   </div>
@@ -19,6 +19,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+pre{
+    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+}
 .frame{
     width:100%;
     height:20px;
@@ -45,7 +48,7 @@ export default {
 }
 .code{
     display: inline-block;
-    margin-left: 20px;
+    /* margin-left: 20px; */
     /* text-indent: 2em; */
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="Nav">
       <div class="frame">
-          <div class="logo">WSA</div>
+          <router-link to="/"><div class="logo">WSA</div></router-link>
           <div class="intro">C++在线分析平台</div>
           <div class="item-box">
                 <router-link to="/FileAnalyse"><div class="item">文件上传</div></router-link>

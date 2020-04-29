@@ -35,14 +35,27 @@ export default {
                 _this.$axios
                 .post(
                     "http://118.89.104.33:8888/api/uploadString",	//dev
-                    {file:_this.textarea}
+                    {codeline:_this.textarea}
                 )
                 .then(function(response) {
                     var data=response.data;
-                    console.log(data);
+                    console.log("aaaaaaa");
+                    if(data.stateCode==0){
+                        console.log(data.filename);
+                        _this.$router.push({
+                            name:'ResultPage',
+                            params:{
+                                filename:data.filename
+                            }
+                        });
+                    }
+                    else if(data.stateCode==-1){
+                        alert(data.errorInfo);
+                    }
                 })
                 .catch(function(error) {
                     console.log(error);
+                    alert("提交代码失败，请联系后台管理员");
                 });
             })(this);
         }

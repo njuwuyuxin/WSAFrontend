@@ -62,7 +62,6 @@ export default {
         },
 
         uploadSuccess(response){
-            console.log(response.stateCode);
             if(response.stateCode==0){
                 console.log(response.filename);
                 this.$router.push({

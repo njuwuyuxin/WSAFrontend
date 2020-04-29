@@ -33,12 +33,10 @@ export default {
         },
         getResult:function(){
             (function(_this){
-                console.log(_this.$route.params.filename);
                 _this.$axios
                 .post(
                     "http://118.89.104.33:8888/api/getResult",	//dev
-                    // {filename:_this.$route.params.filename}
-                    {filename:"test.cpp"}
+                    {filename:_this.$route.params.filename}
                 )
                 .then(function(response) {
                     var data=response.data;

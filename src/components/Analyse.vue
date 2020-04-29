@@ -128,7 +128,12 @@ export default {
             console.log(response.stateCode);
             if(response.stateCode==0){
                 console.log(response.filename);
-                this.$router.push({path:'/ResultPage',params:{filename:response.filename}});
+                this.$router.push({
+                    name:'ResultPage',
+                    params:{
+                        filename:response.filename
+                    }
+                });
             }
             else if(response.stateCode==-1){
                 alert(response.errorInfo);

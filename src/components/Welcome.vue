@@ -5,7 +5,7 @@
         <div class="title">WSA</div>
         <div class="intro">一个在线CPP静态分析平台</div>
         <div class="fullscreen" style="background: url(&quot;https://images.unsplash.com/photo-1551844267-c078a893539b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjExOTUwfQ?w=2200&quot;) 50% 50% / cover;"></div>
-        <router-link to="/Analyse"><div class="go">现在体验</div></router-link>
+        <router-link to="/FileAnalyse"><div class="go">现在体验</div></router-link>
         <div class="footerbox">
             <div class="github">Github</div>
             <div class="footer">SE lab 2020</div>

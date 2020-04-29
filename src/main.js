@@ -18,8 +18,12 @@ Vue.use(VueRouter);
 const router=new VueRouter({
 	routes:[
 		{path:"/",component:Welcome},
-		{path:"/Analyse",component:Analyse},	
-		{path:"/ResultPage",component:ResultPage},	
+		{path:"/FileAnalyse",component:Analyse},	
+		{
+			path:"/ResultPage",
+			name:"ResultPage",
+			component:ResultPage
+		},	
 	],
 	mode:"history"
 })

@@ -9,6 +9,7 @@ Vue.use(ElementUI)
 import App from './App.vue'
 import Welcome from './components/Welcome.vue'
 import Analyse from './components/Analyse.vue'
+import OnlineAnalyse from './components/OnlineAnalyse.vue'
 import ResultPage from './components/ResultPage.vue'
 
 Vue.config.productionTip = false
@@ -19,6 +20,7 @@ const router=new VueRouter({
 	routes:[
 		{path:"/",component:Welcome},
 		{path:"/FileAnalyse",component:Analyse},	
+		{path:"/OnlineAnalyse",component:OnlineAnalyse},	
 		{
 			path:"/ResultPage",
 			name:"ResultPage",

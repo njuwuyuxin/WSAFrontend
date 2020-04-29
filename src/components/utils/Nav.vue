@@ -4,8 +4,8 @@
           <div class="logo">WSA</div>
           <div class="intro">C++在线分析平台</div>
           <div class="item-box">
-                <div class="item">在线分析</div>
-                <div class="item">文件上传</div>
+                <router-link to="/FileAnalyse"><div class="item">文件上传</div></router-link>
+                <router-link to="/OnlineAnalyse"><div class="item">在线分析</div></router-link>
                 <div class="item">分析记录</div>
           </div>
       </div>

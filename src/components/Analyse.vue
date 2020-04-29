@@ -21,12 +21,6 @@
             type="error"
             show-icon>
         </el-alert>
-        <!-- <button v-on:click="SendPost">test</button> -->
-        <!-- <div class="container">
-            <div class="wave"></div>
-        </div> -->
-
-        <!-- <button v-on:click="GetResult">开始分析</button> -->
         
   </div>
 </template>
@@ -40,68 +34,11 @@ export default {
   },
   data(){
         return {
-            reqBody:"",
-            fileList: [],
-            result:{},
             alertInfo:"文件上传失败",
             hasError:false,
         }  
   },
-  methods:{
-        SendGet:function(){
-            (function(_this){
-                _this.$axios
-                .get(
-                    "http://118.89.104.33:8888/api/testGet?filename="+_this.reqBody
-                )
-                .then(function(response) {
-                    var data=response.data;
-                    _this.result=data;      
-                })
-                .catch(function(error) {
-                    console.log(error);
-                });
-            })(this);
-        },
-
-        SendPost:function(){
-            (function(_this){
-                _this.$axios
-                .post(
-                    "http://118.89.104.33:8888/api/testPost",	//dev
-                    {filename:_this.reqBody}
-                )
-                .then(function(response) {
-                    var data=response.data;
-                    _this.result=data; 
-                })
-                .catch(function(error) {
-                    console.log(error);
-                });
-            })(this);
-        },
-
-        GetResult:function(){
-            (function(_this){
-                _this.$axios
-                .post(
-                    " https://www.easy-mock.com/mock/5ea3bed549aac7135eb43e53/wsa/analyze_result",	//dev
-                    // {filename:_this.reqBody}
-                )
-                .then(function(response) {
-                    var data=response.data;
-                    console.log(data); 
-                })
-                .catch(function(error) {
-                    console.log(error);
-                });
-            })(this);
-        },
-
-        sim_result:function () {
-            this.result="这是模拟的返回结果";
-        },
-        
+  methods:{     
         alertCancel:function(){
             this.hasError=false;
         },
@@ -189,6 +126,9 @@ a {
     top:170px;
     margin-left: -200px;
     opacity: 100%;
+}
+.el-upload__tip{
+    text-align: center;
 }
 
 </style>

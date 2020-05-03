@@ -8,7 +8,14 @@
         </div>
         <div class="fullscreen" style="background: url(&quot;https://images.unsplash.com/photo-1551844267-c078a893539b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjExOTUwfQ?w=2200&quot;) 50% 50% / cover;"></div>
         <!-- <router-link to="/FileAnalyse"><div class="go">现在体验</div></router-link> -->
-        <div class="go" v-on:click="is_login=true">现在体验</div>
+        <transition name="button">
+            <div v-if="!is_login" class="go" v-on:click="is_login=true">现在体验</div>
+        </transition>
+        <transition name="login-box">
+            <LoginBox v-if="is_login"></LoginBox>
+        </transition>
+
+
         <div class="footerbox">
             <div class="github">Github</div>
             <div class="footer">SE lab 2020</div>
@@ -18,8 +25,12 @@
 </template>
 
 <script>
+import LoginBox from './utils/LoginBox'
 export default {
   name: 'Welcome',
+  components:{
+      LoginBox,
+  },
   data(){
       return {
           is_login:false,
@@ -32,6 +43,8 @@ export default {
 <style scoped>
 .welcome{
     text-align: center;
+    height:100%;
+    overflow: hidden;
 }
 .bg{
     width:  100%;
@@ -62,6 +75,8 @@ a{
     text-decoration: none;
 }
 .go{
+    position:absolute;
+    left:50%;
     color: white;
     width:200px;
     height: 50px;
@@ -71,14 +86,21 @@ a{
     border-radius: 5px;
     margin:0 auto;
     margin-top: 40px;
+    margin-left: -100px;
     transition: background-color .2s linear;
-    
-    
-    /* border:solid white 1px; */
 }
 .go:hover{
     background-color:#2e9466 ;
 }
+
+.button-leave-active,.login-box-enter-active{
+    transition: opacity 0.5s linear;
+}
+
+.button-leave-to,.login-box-enter{
+    opacity: 0;
+}
+
 .github, .footer{
     text-align: left;
     margin-left: 40px;
@@ -90,9 +112,10 @@ a{
     position: absolute;
     top:90%
 }
+
+/* 实现点击按钮后标题部分平滑上移 */
 .header{
     padding-top: 20%;
-
 }
 .header-login{
     padding-top: 8%;
@@ -101,6 +124,13 @@ a{
 @keyframes toLogin {
     from{padding-top: 20%;}
     to{padding-top: 8%;}
+}
+
+::-webkit-scrollbar {
+    width: 0 !important;
+}
+::-webkit-scrollbar {
+    width: 0 !important;height: 0;
 }
 
 </style>

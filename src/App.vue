@@ -20,6 +20,9 @@ export default {
   margin: 0;
   padding: 0;
 }
+html,body{
+  height:100%;
+}
 a{
   text-decoration:none;
   color:black;
@@ -29,5 +32,6 @@ a{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  height:100%;
 }
 </style>

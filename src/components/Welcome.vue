@@ -2,10 +2,13 @@
   <div class="welcome">
         <div class="bg"></div>
         <!-- <img src="https://s1.ax1x.com/2020/04/16/JAxW8A.jpg" alt="JAxW8A.jpg" border="0" /> -->
-        <div class="title">WSA</div>
-        <div class="intro">一个在线CPP静态分析平台</div>
+        <div v-bind:class="is_login?'header-login':'header'">
+            <div class="title">WSA</div>
+            <div class="intro">一个在线CPP静态分析平台</div>
+        </div>
         <div class="fullscreen" style="background: url(&quot;https://images.unsplash.com/photo-1551844267-c078a893539b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjExOTUwfQ?w=2200&quot;) 50% 50% / cover;"></div>
-        <router-link to="/FileAnalyse"><div class="go">现在体验</div></router-link>
+        <!-- <router-link to="/FileAnalyse"><div class="go">现在体验</div></router-link> -->
+        <div class="go" v-on:click="is_login=true">现在体验</div>
         <div class="footerbox">
             <div class="github">Github</div>
             <div class="footer">SE lab 2020</div>
@@ -17,6 +20,11 @@
 <script>
 export default {
   name: 'Welcome',
+  data(){
+      return {
+          is_login:false,
+      }
+  }
 }
 </script>
 
@@ -44,7 +52,7 @@ export default {
 }
 .title{
     font-size: 45px;
-    padding-top: 20%;
+    /* padding-top: 20%; */
 }
 .intro{
     padding-top: 10px;
@@ -81,6 +89,18 @@ a{
 .footerbox{
     position: absolute;
     top:90%
+}
+.header{
+    padding-top: 20%;
+
+}
+.header-login{
+    padding-top: 8%;
+    animation: toLogin 1s;
+}
+@keyframes toLogin {
+    from{padding-top: 20%;}
+    to{padding-top: 8%;}
 }
 
 </style>

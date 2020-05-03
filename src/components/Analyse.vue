@@ -48,15 +48,17 @@ export default {
             const extension = testmsg === 'c';
             const extension2 = testmsg === 'cpp';
             const isLt1M = file.size / 1024 / 1024 < 1;
-            if(!extension && !extension2) {
-                this.alertInfo = "上传文件只能是 .c或.cpp格式！";
-                this.hasError=true;
-                setTimeout(this.alertCancel,2000);
-            }
             if(!isLt1M){
                 this.alertInfo = "上传文件不能超过1MB！";
                 this.hasError=true;
                 setTimeout(this.alertCancel,2000);
+                return false;
+            }
+            if(!extension && !extension2) {
+                this.alertInfo = "上传文件只能是 .c或.cpp格式！";
+                this.hasError=true;
+                setTimeout(this.alertCancel,2000);
+                return false;
             }
             return extension || extension2 && isLt1M;
         },

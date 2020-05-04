@@ -2,18 +2,23 @@
   <div class="welcome">
         <div class="bg"></div>
         <!-- <img src="https://s1.ax1x.com/2020/04/16/JAxW8A.jpg" alt="JAxW8A.jpg" border="0" /> -->
-        <div v-bind:class="is_login?'header-login':'header'">
-            <div class="title">WSA</div>
-            <div class="intro">一个在线CPP静态分析平台</div>
+        <div class="main">
+            <div v-bind:class="is_login||is_register?'header-login':'header'">
+                <div class="title">WSA</div>
+                <div class="intro">一个在线CPP静态分析平台</div>
+            </div>
+            <div class="fullscreen" style="background: url(&quot;https://images.unsplash.com/photo-1551844267-c078a893539b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjExOTUwfQ?w=2200&quot;) 50% 50% / cover;"></div>
+            <transition name="button">
+                <div v-if="!is_login&&!is_register" class="go" v-on:click="is_login=true">现在体验</div>
+            </transition>
+            <transition name="login-box">
+                <LoginBox v-if="is_login" @func="getFlagFromLoginBox"></LoginBox>
+            </transition>
+            <transition name="register-box">
+                <RegisterBox v-if="is_register" @func="getFlagFromRegisterBox"></RegisterBox>
+            </transition>
         </div>
-        <div class="fullscreen" style="background: url(&quot;https://images.unsplash.com/photo-1551844267-c078a893539b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjExOTUwfQ?w=2200&quot;) 50% 50% / cover;"></div>
-        <!-- <router-link to="/FileAnalyse"><div class="go">现在体验</div></router-link> -->
-        <transition name="button">
-            <div v-if="!is_login" class="go" v-on:click="is_login=true">现在体验</div>
-        </transition>
-        <transition name="login-box">
-            <LoginBox v-if="is_login"></LoginBox>
-        </transition>
+        
 
 
         <div class="footerbox">
@@ -26,14 +31,27 @@
 
 <script>
 import LoginBox from './utils/LoginBox'
+import RegisterBox from './utils/RegisterBox'
 export default {
   name: 'Welcome',
   components:{
       LoginBox,
+      RegisterBox,
   },
   data(){
       return {
           is_login:false,
+          is_register:false,
+      }
+  },
+  methods:{
+      getFlagFromLoginBox:function(){
+          this.is_login=false;
+          this.is_register=true;
+      },
+      getFlagFromRegisterBox:function(){
+          this.is_login=true;
+          this.is_register=false;
       }
   }
 }
@@ -44,7 +62,16 @@ export default {
 .welcome{
     text-align: center;
     height:100%;
+    width:100%;
     overflow: hidden;
+    position: absolute;
+}
+.main{
+    position:relative;
+    height:100%;
+    width:380px;
+    left:50%;
+    margin-left: -190px;
 }
 .bg{
     width:  100%;
@@ -93,11 +120,20 @@ a{
     background-color:#2e9466 ;
 }
 
-.button-leave-active,.login-box-enter-active{
-    transition: opacity 0.5s linear;
+/* 按钮渐变消失动画 */
+.button-leave-active{
+    transition: opacity 0.1s linear;
+}
+.button-leave-to{
+    opacity: 0;
 }
 
-.button-leave-to,.login-box-enter{
+/* 登录框和注册框互相切换动画 */
+.login-box-enter-active,.register-box-enter-active{
+    transition: opacity 0.3s linear;
+}
+
+.login-box-enter,.register-box-enter{
     opacity: 0;
 }
 
@@ -115,15 +151,15 @@ a{
 
 /* 实现点击按钮后标题部分平滑上移 */
 .header{
-    padding-top: 20%;
+    padding-top: 70%;
 }
 .header-login{
-    padding-top: 8%;
+    padding-top: 30%;
     animation: toLogin 1s;
 }
 @keyframes toLogin {
-    from{padding-top: 20%;}
-    to{padding-top: 8%;}
+    from{padding-top: 70%;}
+    to{padding-top: 30%;}
 }
 
 ::-webkit-scrollbar {

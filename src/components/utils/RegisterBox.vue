@@ -140,8 +140,16 @@ export default {
                 this.pwd_flag=2;
                 this.pwd_err_info="密码长度需在8个字符及以上";
             }
+            else if(this.password_confirm!=this.password&&this.pwd_confirm_flag!=0){
+                this.pwd_flag=1;
+                this.pwd_confirm_flag=2;
+                this.pwdconfirm_err_info="两次输入的密码不一致";
+            }
             else{
                 this.pwd_flag=1;
+                if(this.pwd_confirm_flag!=0){
+                    this.pwd_confirm_flag=1;
+                }
             }
         },
         PwdconfirmChange(){

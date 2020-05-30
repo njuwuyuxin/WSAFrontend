@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import {hex_sha1} from './sha1.js';
 export default {
     name: 'RegisterBox',
     data(){
@@ -70,18 +71,62 @@ export default {
     },
     methods:{
         SubmitInfo:function(){
-
+            if(this.username_flag==1&&this.pwd_flag==1&&this.pwd_confirm_flag==1){
+                console.log("submit");
+                var hex_pwd = hex_sha1(this.password);
+                console.log(hex_pwd);
+                (function(_this){
+                    _this.$axios
+                    .post(
+                        "http://118.89.104.33:8888/api/register",	//dev
+                        {
+                            username:_this.username,
+                            password:hex_pwd
+                        }
+                    )
+                    .then(function(response) {
+                        var data=response.data;
+                        _this.result=data; 
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+                })(this);
+            }
+            else{
+                this.$message({
+                    message:"填写信息不符合格式",
+                    type:"error",
+                    duration:2000,
+                    offset:160
+                });
+            }
+            
         },
         GoLogin:function(){
             this.$emit('func');
         },
         UsernameChange(){
+            function check_other_char(str)
+            {
+                var check = /[^a-zA-Z0-9@.]/; 
+                if(check.test(str)){
+                    return true;
+                }
+                else
+                    return false;
+            }
+
             if(this.username.length==0){
                 this.username_flag=0;
             }
             else if(this.username.length<8){
                 this.username_flag=2;
                 this.username_err_info="用户名长度需在8个字符及以上";
+            }
+            else if(check_other_char(this.username)){
+                this.username_flag=2;
+                this.username_err_info="用户名不能包含特殊字符";
             }
             else{
                 this.username_flag=1;

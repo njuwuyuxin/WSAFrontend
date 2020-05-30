@@ -5,7 +5,7 @@
         <el-upload
             class="upload-box"
             drag
-            action="http://118.89.104.33:8888/api/testFile"
+            action="http://118.89.104.33:8888/api/uploadFile"
             :before-upload="uploadCheck"
             :on-success="uploadSuccess"
             :on-error="uploadFailed"

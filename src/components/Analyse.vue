@@ -12,7 +12,7 @@
             multiple>
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-            <div class="el-upload__tip" slot="tip">只能上传c cpp文件，且不超过1MB</div>
+            <div class="el-upload__tip" slot="tip">只能上传.c,.cpp,.zip文件，且不超过1MB</div>
         </el-upload>
         <el-alert
             class="alert"
@@ -47,6 +47,7 @@ export default {
             var testmsg=file.name.substring(file.name.lastIndexOf('.')+1);            
             const extension = testmsg === 'c';
             const extension2 = testmsg === 'cpp';
+            const extension3 = testmsg === 'zip';
             const isLt1M = file.size / 1024 / 1024 < 1;
             if(!isLt1M){
                 this.alertInfo = "上传文件不能超过1MB！";
@@ -54,22 +55,22 @@ export default {
                 setTimeout(this.alertCancel,2000);
                 return false;
             }
-            if(!extension && !extension2) {
-                this.alertInfo = "上传文件只能是 .c或.cpp格式！";
+            if(!extension && !extension2 && !extension3) {
+                this.alertInfo = "上传文件只能是 .c,.cpp或.zip格式！";
                 this.hasError=true;
                 setTimeout(this.alertCancel,2000);
                 return false;
             }
-            return extension || extension2 && isLt1M;
+            return extension || extension2 || extension3 && isLt1M;
         },
 
         uploadSuccess(response){
             if(response.stateCode==0){
-                console.log(response.filename);
+                console.log(response.analyzeID);
                 this.$router.push({
                     name:'ResultPage',
                     params:{
-                        filename:response.filename
+                        analyzeID:response.analyzeID
                     }
                 });
             }

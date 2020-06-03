@@ -2,11 +2,7 @@
     <div class="ResultPage">
         <Nav></Nav>
         <div class="code-box" v-if="getResultFlag">
-            <div class="code-box-header">
-                <span>{{result.filename}}</span>
-                <span class="err_count">发现 {{result.error_count}} 个缺陷</span>
-            </div>
-            <CodeError v-for="error in result.errors" v-bind:ErrorInfo="error" :key="error.start_line"></CodeError>
+            <FileErrors v-for="file in results" v-bind:result="file" :key="file.filename"> </FileErrors>
         </div>
         <div class="waiting" v-else>
             <div class="waiting_info">正在分析 请稍等...</div>
@@ -20,12 +16,13 @@
 
 <script>
 import Nav from './utils/Nav.vue'
-import CodeError from './utils/CodeError'
+// import CodeError from './utils/CodeError'
+import FileErrors from './utils/FileErrors'
 export default {
     name: 'ResultPage',
     components:{
         Nav,
-        CodeError,
+        FileErrors,
     },
     methods:{
         sim:function(){
@@ -36,17 +33,18 @@ export default {
                 _this.$axios
                 .post(
                     "http://118.89.104.33:8888/api/getResult",	//dev
-                    {filename:_this.$route.params.filename}
+                    {analyzeID:_this.$route.params.analyzeID}
                 )
                 .then(function(response) {
                     var data=response.data;
-                    _this.result=data; 
+                    _this.results=data; 
                 })
                 .catch(function(error) {
                     console.log(error);
                 });
             })(this);
-        }
+            
+        },
     },
     mounted(){
         this.getResult();
@@ -58,7 +56,7 @@ export default {
     data(){
       return{
           getResultFlag:false,
-          result:{},
+          results:[],
       }
   }
 }
@@ -72,38 +70,8 @@ export default {
     margin-top: 30px;
     margin-left: -460px;
     width:920px;
-    border:solid #e1e4e8 1px;
-    border-radius: 3px;
-}
-
-.code-box-header{
-    background-color: #fafbfc;
-    border-bottom: 1px solid #e1e4e8;
-    font-size: 12px;
-    line-height: 32px;
-    padding-left: 20px;
-    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
-}
-
-.err_count{
-    margin-left: 10px;
-}
-
-.correct-line,.error-line{
-    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
-    font-size: 12px;
-    color: #24292e;
-    word-wrap: normal;
-    white-space: pre;
-    line-height: 20px;
-}
-.correct-line{
-    background-color: #e6ffed;
-    
-}
-.error-line{
-    background-color: #ffeef0;
-    /* background-color: #ffdce0; */
+    /* border:solid #e1e4e8 1px; */
+    /* border-radius: 3px; */
 }
 
 .waiting_info{

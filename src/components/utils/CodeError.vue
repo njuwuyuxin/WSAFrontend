@@ -6,9 +6,9 @@
                   <span class="part1">...</span>
                   <span class="part2">...</span>
               </div>
-              <NormalLine v-for="line in ErrorInfo.lines_before_error" v-bind:LineInfo="line" :key="line.lineNo"></NormalLine>
+              <NormalLine v-for="line in ErrorInfo.before_error" v-bind:LineInfo="line" :key="line.lineNo"></NormalLine>
               <ErrorLine v-on:mouseenter.native="showErrorTips" v-on:mouseout.native="closeErrorTips" v-for="line in ErrorInfo.error_lines" v-bind:LineInfo="line" :key="line.lineNo"></ErrorLine>
-              <NormalLine v-for="line in ErrorInfo.lines_after_error" v-bind:LineInfo="line" :key="line.lineNo"></NormalLine>
+              <NormalLine v-for="line in ErrorInfo.after_error" v-bind:LineInfo="line" :key="line.lineNo"></NormalLine>
               <el-alert
               class="errorTips"
                 v-if="ErrorTipsFlag"

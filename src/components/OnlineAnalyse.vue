@@ -39,13 +39,12 @@ export default {
                 )
                 .then(function(response) {
                     var data=response.data;
-                    console.log("aaaaaaa");
                     if(data.stateCode==0){
-                        console.log(data.filename);
+                        console.log(data.analyzeID);
                         _this.$router.push({
                             name:'ResultPage',
                             params:{
-                                filename:data.filename
+                                analyzeID:data.analyzeID
                             }
                         });
                     }

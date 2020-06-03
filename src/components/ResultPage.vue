@@ -2,7 +2,7 @@
     <div class="ResultPage">
         <Nav></Nav>
         <div class="code-box" v-if="getResultFlag">
-            <FileErrors v-for="file in results" v-bind:result="file" :key="file.filename"> </FileErrors>
+            <FileErrors v-for="file in results" v-bind:result="file" v-bind:analyzeID="analyzeID" :key="file.filename"> </FileErrors>
         </div>
         <div class="waiting" v-else>
             <div class="waiting_info">正在分析 请稍等...</div>
@@ -49,6 +49,7 @@ export default {
     mounted(){
         this.getResult();
         setTimeout(this.sim,2000);
+        this.analyzeID=this.$route.params.analyzeID;
     },
     props: {
         msg: String
@@ -57,6 +58,7 @@ export default {
       return{
           getResultFlag:false,
           results:[],
+          analyzeID:"",
       }
   }
 }
@@ -70,8 +72,6 @@ export default {
     margin-top: 30px;
     margin-left: -460px;
     width:920px;
-    /* border:solid #e1e4e8 1px; */
-    /* border-radius: 3px; */
 }
 
 .waiting_info{

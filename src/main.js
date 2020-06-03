@@ -11,6 +11,7 @@ import Welcome from './components/Welcome.vue'
 import Analyse from './components/Analyse.vue'
 import OnlineAnalyse from './components/OnlineAnalyse.vue'
 import ResultPage from './components/ResultPage.vue'
+import FilePage from './components/FilePage.vue'
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios;
@@ -25,7 +26,12 @@ const router=new VueRouter({
 			path:"/ResultPage",
 			name:"ResultPage",
 			component:ResultPage
-		},	
+		},
+		{
+			path:"/FilePage",
+			name:"FilePage",
+			component:FilePage
+		},
 	],
 	mode:"history"
 })

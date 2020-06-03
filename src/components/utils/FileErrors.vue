@@ -1,7 +1,7 @@
 <template>
   <div class="FileErrors">
         <div class="code-box-header">
-            <span>{{result.filename}}</span>
+            <span class="file_name" v-on:click="checkFile">{{result.filename}}</span>
             <span class="err_count">发现 {{result.error_count}} 个缺陷</span>
         </div>
         <CodeError v-for="error in result.errors" v-bind:ErrorInfo="error" :key="error.start_line"></CodeError>
@@ -17,6 +17,7 @@ export default {
   },
   props:{
       result:Object,
+      analyzeID:String,
   },
   data(){
       return {
@@ -24,6 +25,17 @@ export default {
       }
   },
   methods:{
+      checkFile:function(){
+            //组件从上级页面拿到AnalyzeID，将ID和filename通过路由传值传递给Filepage并跳转，FilePage在加载过程中使用该信息请求文件内容
+            console.log(this.analyzeID);
+            this.$router.push({
+                name:'FilePage',
+                params:{
+                    analyzeID:this.analyzeID,
+                    filename:this.result.filename
+                }
+            });
+      }
   }
 }
 </script>
@@ -44,25 +56,12 @@ export default {
     font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
 }
 
+.file_name:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .err_count{
     margin-left: 10px;
 }
-
-.correct-line,.error-line{
-    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
-    font-size: 12px;
-    color: #24292e;
-    word-wrap: normal;
-    white-space: pre;
-    line-height: 20px;
-}
-.correct-line{
-    background-color: #e6ffed;
-    
-}
-.error-line{
-    background-color: #ffeef0;
-    /* background-color: #ffdce0; */
-}
-
 </style>

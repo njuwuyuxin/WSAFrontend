@@ -12,6 +12,7 @@ import App from './App.vue'
 import Welcome from './components/Welcome.vue'
 import Analyse from './components/Analyse.vue'
 import OnlineAnalyse from './components/OnlineAnalyse.vue'
+import AnalyseHistory from './components/AnalyseHistory.vue'
 import ResultPage from './components/ResultPage.vue'
 import FilePage from './components/FilePage.vue'
 
@@ -28,7 +29,8 @@ const router=new VueRouter({
 			name:"FileAnalyse",
 			component:Analyse
 		},	
-		{path:"/OnlineAnalyse",component:OnlineAnalyse},	
+		{path:"/OnlineAnalyse",component:OnlineAnalyse},
+		{path:"/AnalyseHistory",component:AnalyseHistory},
 		{
 			path:"/ResultPage",
 			name:"ResultPage",

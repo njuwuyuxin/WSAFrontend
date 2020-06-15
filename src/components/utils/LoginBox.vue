@@ -6,7 +6,7 @@
             <div class="buttons">
                 <button v-on:click="SubmitInfo">登录</button>
                 <button v-on:click="GoRegister">还没有账号？点击注册</button>
-                <router-link to="/FileAnalyse"><div class="visitor">游客登陆</div></router-link>
+                <router-link to="/FileAnalyse"><div class="visitor" v-on:click="guestLogin">游客登陆</div></router-link>
             </div>
             
         </div>
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import {hex_sha1} from './sha1.js';
 export default {
     name: 'LoginBox',
     data(){
@@ -25,13 +26,14 @@ export default {
     methods:{
         SubmitInfo:function(){
             console.log(document.cookie);
+            var hex_pwd = hex_sha1(this.password);
             (function(_this){
                 _this.$axios
                 .post(
                     "http://118.89.104.33:8888/api/login",	//dev
                     {
                         username:_this.username,
-                        password:_this.password
+                        password:hex_pwd
                     }
                 )
                 .then(function(response) {
@@ -57,6 +59,32 @@ export default {
         },
         GoRegister:function(){
             this.$emit('func');
+        },
+        guestLogin:function(){
+            (function(_this){
+                _this.$axios
+                .post(
+                    "http://118.89.104.33:8888/api/loginAsGuest",	//dev
+                )
+                .then(function(response) {
+                    var data=response.data;
+                    if(data.statusCode==0){
+                        // _this.$router.push({name:'FileAnalyse'});
+                    }
+                    else{
+                        _this.$message({
+                            message:data.info,
+                            type:"error",
+                            duration:2000,
+                            offset:160
+                        });
+                    }
+                    console.log(data);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+            })(this);
         }
     }
 }

@@ -6,7 +6,7 @@
           <div class="item-box">
                 <router-link to="/FileAnalyse"><div class="item">文件上传</div></router-link>
                 <router-link to="/OnlineAnalyse"><div class="item">在线分析</div></router-link>
-                <div class="item">分析记录</div>
+                <router-link to="/AnalyseHistory"><div class="item">分析记录</div></router-link>
           </div>
       </div>
   </div>

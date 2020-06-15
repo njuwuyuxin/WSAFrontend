@@ -86,7 +86,25 @@ export default {
                     )
                     .then(function(response) {
                         var data=response.data;
-                        _this.result=data; 
+                        console.log(data);
+                        if(data.statusCode==0){
+                            _this.$message({
+                                message:"注册成功，已自动为您跳转",
+                                type:"success",
+                                duration:2000,
+                                offset:160
+                            });
+                            _this.$router.push({name:'FileAnalyse'}); 
+                        }
+                        else{
+                            _this.$message({
+                                message:data.info,
+                                type:"error",
+                                duration:2000,
+                                offset:160
+                            });
+                        }
+                        
                     })
                     .catch(function(error) {
                         console.log(error);

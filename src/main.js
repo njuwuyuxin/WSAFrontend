@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import axios from 'axios'
 import VueRouter from 'vue-router'
+import cookies from 'vue-cookies'
+import 'http'
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -15,12 +17,17 @@ import FilePage from './components/FilePage.vue'
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios;
-
+Vue.prototype.$cookies = cookies;
+axios.defaults.withCredentials = true;
 Vue.use(VueRouter);
 const router=new VueRouter({
 	routes:[
 		{path:"/",component:Welcome},
-		{path:"/FileAnalyse",component:Analyse},	
+		{
+			path:"/FileAnalyse",
+			name:"FileAnalyse",
+			component:Analyse
+		},	
 		{path:"/OnlineAnalyse",component:OnlineAnalyse},	
 		{
 			path:"/ResultPage",

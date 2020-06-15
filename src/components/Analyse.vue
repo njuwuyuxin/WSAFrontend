@@ -5,6 +5,7 @@
         <el-upload
             class="upload-box"
             drag
+            with-credentials
             action="http://118.89.104.33:8888/api/uploadFile"
             :before-upload="uploadCheck"
             :on-success="uploadSuccess"
@@ -21,7 +22,7 @@
             type="error"
             show-icon>
         </el-alert>
-        
+        <!-- <button v-on:click='testCookie'>test</button> -->
   </div>
 </template>
 
@@ -42,7 +43,31 @@ export default {
         alertCancel:function(){
             this.hasError=false;
         },
-
+        testCookie(){
+            (function(_this){
+                _this.$axios
+                .post(
+                    "http://118.89.104.33:8888/setcookie",	//dev
+                    {test:123123}
+                )
+                .then(function(response) {
+                    var data = response.data;
+                    var headers = response.headers;
+                    // console.log(headers);
+                    var Mycookie = headers.mycookie;
+                    // console.log(Mycookie);
+                    var key_val = Mycookie.split('=');
+                    console.log(key_val);
+                    // _this.$cookies.set(key_val[0],key_val[1],"1d");
+                    
+                    console.log(data);
+                    console.log("set Cookie!");
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+            })(this);
+        },
         uploadCheck(file){
             var testmsg=file.name.substring(file.name.lastIndexOf('.')+1);            
             const extension = testmsg === 'c';
@@ -65,6 +90,7 @@ export default {
         },
 
         uploadSuccess(response){
+            console.log("upload file success!");
             if(response.stateCode==0){
                 console.log(response.analyzeID);
                 this.$router.push({

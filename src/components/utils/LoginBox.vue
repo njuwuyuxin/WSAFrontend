@@ -24,7 +24,36 @@ export default {
     },
     methods:{
         SubmitInfo:function(){
-
+            console.log(document.cookie);
+            (function(_this){
+                _this.$axios
+                .post(
+                    "http://118.89.104.33:8888/api/login",	//dev
+                    {
+                        username:_this.username,
+                        password:_this.password
+                    }
+                )
+                .then(function(response) {
+                    var data=response.data;
+                    if(data.statusCode==0){
+                        _this.$router.push({name:'FileAnalyse'});
+                    }
+                    else{
+                        _this.$message({
+                            message:data.info,
+                            type:"error",
+                            duration:2000,
+                            offset:160
+                        });
+                    }
+                    console.log(data);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+            })(this);
+            console.log(document.cookie);
         },
         GoRegister:function(){
             this.$emit('func');

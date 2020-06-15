@@ -16,7 +16,6 @@
 
 <script>
 import Nav from './utils/Nav.vue'
-// import CodeError from './utils/CodeError'
 import FileErrors from './utils/FileErrors'
 export default {
     name: 'ResultPage',
@@ -28,22 +27,49 @@ export default {
         sim:function(){
             this.getResultFlag=true;
         },
-        getResult:function(){
-            (function(_this){
-                _this.$axios
-                .post(
-                    "http://118.89.104.33:8888/api/getResult",	//dev
+        getResult:async function(){
+            //自定义sleep函数
+            function sleep(d){
+                for(var t = Date.now();Date.now() - t <= d;);
+            }
+
+            //axios为异步请求，这里使用async函数实现同步效果
+            async function tryGetResult(_this){
+                var response = await _this.$axios.post(
+                    "http://118.89.104.33:8888/api/getResult",
                     {analyzeID:_this.$route.params.analyzeID}
-                )
-                .then(function(response) {
-                    var data=response.data;
-                    _this.results=data; 
-                })
-                .catch(function(error) {
-                    console.log(error);
-                });
-            })(this);
-            
+                );
+                var data = response.data;
+                console.log("try to get result");
+                console.log(data);
+                //后端分析完成，若未完成，statusCode=-1
+                if(data.statusCode==0){
+                    _this.getResultFlag=true;
+                    _this.results=data.results;
+                }
+            }
+
+            //轮询请求分析结果，每隔1秒请求一次，超过10次未得到结果视为超时
+            var try_count=0;
+            while(this.getResultFlag==false){
+                if(try_count>=10){
+                    this.$message({
+                        message:"分析超时，请稍后重试",
+                        type:"error",
+                        duration:2000,
+                        offset:160
+                    });
+                    this.$router.push({name:'FileAnalyse'});
+                    break;
+                }
+                //等待每次axios请求返回
+                await tryGetResult(this);
+                if(this.getResultFlag==true)
+                    break;
+                try_count+=1;
+                //每隔1秒请求一次
+                sleep(1000);
+            }
         },
     },
     mounted(){

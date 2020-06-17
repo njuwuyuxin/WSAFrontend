@@ -23,7 +23,11 @@ axios.defaults.withCredentials = true;
 Vue.use(VueRouter);
 const router=new VueRouter({
 	routes:[
-		{path:"/",component:Welcome},
+		{
+			path:"/",
+			name:"Welcome",
+			component:Welcome
+		},
 		{
 			path:"/FileAnalyse",
 			name:"FileAnalyse",

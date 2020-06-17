@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import Nav from './utils/Nav.vue'
+import Nav from './utils/Nav';
 export default {
     name: 'AnalyseHistory',
     components:{

@@ -15,13 +15,13 @@
 </template>
 
 <script>
-import Nav from './utils/Nav.vue'
 import FileErrors from './utils/FileErrors'
+import Nav from './utils/Nav';
 export default {
     name: 'ResultPage',
     components:{
-        Nav,
         FileErrors,
+        Nav,
     },
     methods:{
         sim:function(){

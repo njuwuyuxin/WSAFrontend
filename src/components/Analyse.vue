@@ -1,6 +1,6 @@
 <template>
   <div class="analyse">
-        <Nav></Nav>      
+        <Nav></Nav>
         <div class="title">上传文件，马上开始静态分析之旅</div>
         <el-upload
             class="upload-box"
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import Nav from './utils/Nav.vue'
+import Nav from './utils/Nav';
 export default {
   name: 'Analyse',
   components:{

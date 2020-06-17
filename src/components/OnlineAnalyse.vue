@@ -1,6 +1,6 @@
 <template>
-  <div class="OnlineAnalyse">
-        <Nav></Nav>      
+  <div class="OnlineAnalyse">     
+        <Nav></Nav>
         <div class="title">在线编辑，马上开始静态分析之旅</div>
         <div class="container">
             <el-input
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import Nav from './utils/Nav.vue'
+import Nav from './utils/Nav';
 export default {
   name: 'OnlineAnalyse',
   components:{

@@ -18,9 +18,6 @@
                 <RegisterBox v-if="is_register" @func="getFlagFromRegisterBox"></RegisterBox>
             </transition>
         </div>
-        
-
-
         <div class="footerbox">
             <div class="github">Github</div>
             <div class="footer">SE lab 2020</div>
@@ -53,6 +50,23 @@ export default {
           this.is_login=true;
           this.is_register=false;
       }
+  },
+  mounted(){
+      //发送一个请求判断一下登陆状态
+      (function(_this){
+        _this.$axios
+        .post(
+            "http://118.89.104.33:8888/api/whoIam"
+        )
+        .then(function(response) {
+            var data = response.data;
+            console.log(data);
+            _this.$router.push({name:'FileAnalyse'});
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+    })(this);
   }
 }
 </script>
